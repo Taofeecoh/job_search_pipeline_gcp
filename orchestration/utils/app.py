@@ -28,8 +28,8 @@ file_name = (
              "de_internships_{}.csv"
              .format(time.strftime("%Y-%m-%d %H:%M:%S"))
              )
-blob = "Iinternships_dump/"
-blob_file = "job_api_dump/{}".format(file_name)
+blob = "internships_dump/"
+blob_file = "{}{}".format(blob, file_name)
 storage_client = storage.Client()
 logging.basicConfig(
                 filename="ingestion.log",
