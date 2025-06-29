@@ -1,29 +1,48 @@
-
+import logging
 import os
+import time
+
 from dotenv import load_dotenv
-from module import get_data
 from google.cloud import storage
 
+from module import ingest_to_gcs
 
 load_dotenv()
-url = "https://active-jobs-db.p.rapidapi.com/active-ats-24h"
-
+url = "https://internships-api.p.rapidapi.com/active-jb-7d"
 
 querystring = {
-    "limit":"10",
-    "offset":"0",
-    "title_filter":"Data Engineer",
-    "location_filter":"United States",
-    "description_type":"text"
+    "description_type": "text",
+    "remote": "true",
+    "date_filter": "2025-06-26",
+    "advanced_title_filter":
+    "(Data | 'Pipeline' | 'Data Engineer' | 'Analytics')"
     }
 
 headers = {
-	"x-rapidapi-key": os.getenv("API_KEY"),
-	"x-rapidapi-host": "active-jobs-db.p.rapidapi.com"
-}
+    "x-rapidapi-key": os.getenv("INTERN_JOB_API"),
+    "x-rapidapi-host": "internships-api.p.rapidapi.com"
+    }
 
-extracted_data = get_data(url, querystring, headers)
-print(extracted_data)
-
-
+bucket_name = "all-jobs-lake"
+file_name = (
+             "de_internships_{}.csv"
+             .format(time.strftime("%Y-%m-%d %H:%M:%S"))
+             )
+blob = "Iinternships_dump/"
+blob_file = "job_api_dump/{}".format(file_name)
 storage_client = storage.Client()
+logging.basicConfig(
+                filename="ingestion.log",
+                level=logging.INFO,
+                format='%(levelname)s:%(message)s:%(asctime)s'
+                )
+
+data = ingest_to_gcs(
+    url,
+    queryparams=querystring,
+    headers=headers,
+    blob_path=blob_file,
+    bucket=bucket_name
+    )
+
+print(data)
