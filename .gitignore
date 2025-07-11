@@ -4,4 +4,6 @@
 *ipynb
 *cache*
 *.csv
-*log
+*log*
+*plugin*
+*config*
