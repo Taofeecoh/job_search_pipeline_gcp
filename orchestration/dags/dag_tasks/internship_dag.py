@@ -39,7 +39,7 @@ file_name = (
              )
 
 blob_file = "{}{}".format(blob, file_name)
-storage_client = storage.Client()
+# storage_client = storage.Client()
 logging.basicConfig(
                 filename="ingestion.log",
                 level=logging.INFO,
@@ -69,7 +69,7 @@ with DAG(
         task_id="extract_to_cloud_storage",
         python_callable=ingest_to_gcs,
         op_kwargs= {
-            "url":url,
+            "endpoint":url,
             "queryparams": querystring,
             "headers": headers,
             "blob_path": blob_file,
