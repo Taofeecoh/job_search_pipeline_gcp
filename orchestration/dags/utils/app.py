@@ -6,35 +6,35 @@ from dotenv import load_dotenv
 from google.cloud import bigquery
 from module import ingest_to_gcs, create_bq_dataset
 
-# load_dotenv()
-# url = "https://internships-api.p.rapidapi.com/active-jb-7d"
+load_dotenv()
+url = "https://internships-api.p.rapidapi.com/active-jb-7d"
 
-# querystring = {
-#     "description_type": "text",
-#     "remote": "true",
-#     "date_filter": "2025-06-26",
-#     "advanced_title_filter":
-#     "(Data | 'Pipeline' | 'Data Engineer' | 'Analytics')"
-#     }
+querystring = {
+    "description_type": "text",
+    "remote": "true",
+    "date_filter": "2025-06-26",
+    "advanced_title_filter":
+    "(Data | 'Pipeline' | 'Data Engineer' | 'Analytics')"
+    }
 
-# headers = {
-#     "x-rapidapi-key": os.getenv("INTERN_JOB_API"),
-#     "x-rapidapi-host": "internships-api.p.rapidapi.com"
-#     }
+headers = {
+    "x-rapidapi-key": os.getenv("INTERN_JOB_API"),
+    "x-rapidapi-host": "internships-api.p.rapidapi.com"
+    }
 
-# bucket_name = "general-dump"
-# file_name = (
-#              "de_internships_{}.csv"
-#              .format(time.strftime("%Y-%m-%d %H:%M:%S"))
-#              )
-# blob = "internships_dump/"
-# blob_file = "{}{}".format(blob, file_name)
+bucket_name = "general-dump"
+file_name = (
+             "de_internships_{}.csv"
+             .format(time.strftime("%Y-%m-%d %H:%M:%S"))
+             )
+blob = "internships_dump/"
+blob_file = "{}{}".format(blob, file_name)
 
-# logging.basicConfig(
-#                 filename="ingestion.log",
-#                 level=logging.INFO,
-#                 format='%(levelname)s:%(message)s:%(asctime)s'
-#                 )
+logging.basicConfig(
+                filename="ingestion.log",
+                level=logging.INFO,
+                format='%(levelname)s:%(message)s:%(asctime)s'
+                )
 
 
 # # Ingest to cloud storage
